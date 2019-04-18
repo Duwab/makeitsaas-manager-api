@@ -6,25 +6,31 @@ This is the framework to develop API for a multi-service architectures. Main fea
 * Cache
 * Queues (Pub/Sub)
 
+## Prerequisites
+
+1. CLI programs :
+* `npm:  >=6.7.0`
+* `docker:  >=18.09.2`
+* `docker-compose: >=1.24.0`
+ 
+2. Make it SaaS [devkit](https://github.com/makeitsaas/makeitsaas-devkit) (one per machine)
+3. One [authentication service](https://github.com/makeitsaas/makeitsaas-auth-instance) (one per project)
+
 ## Getting started
 
-1. Install [devkit](https://github.com/makeitsaas/makeitsaas-devkit)
-2. Install [authentication instance](https://github.com/makeitsaas/makeitsaas-auth-instance)
 3. Then you can setup your new service :
 
 ```
-git clone https://github.com/makeitsaas/makeitsaas-microservice my-service
-cd my-service
-docker build -t my-project/my-service .
-docker run -p 3001:3000 my-project/my-service
-```
-
-or (with npm) :
-
-```
-npm install
-cd framework && npm install # will be removed when moved as a package
+npm install makeitsaas --save
+node ./node_modules/makeitsaas/bin/cli init-project
+cp .env.dist .env 
 npm start
+```
+
+Then the server shall be running on port `:3000` (change `PORT` value in `.env`).
+```
+curl http://localhost:3000 
+# App is up and running
 ```
 
 ## Resolvers
