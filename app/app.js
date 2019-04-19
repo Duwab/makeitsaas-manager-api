@@ -1,4 +1,4 @@
-require('api-service').then(framework => {
+require('@make-it-saas/api').then(framework => {
   let subLogs = framework.queue.observable('logs').subscribe(message => {
     console.log('some log', message);
   });
