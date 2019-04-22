@@ -3,8 +3,7 @@ resources:
     routes:
       auto: true
   expose:
-    entity: ~
-    entity2:
+    test:
       - get: /test/authentication
         handler: handler-example.authenticationResolve
         security: security.rule1
@@ -14,12 +13,55 @@ resources:
       - get: /test/database
         handler: handler-example.modelResolve
         security: security.rule1
+    character:
       - post: /characters
         handler: handler-modify.createCharacter
         security: security.rule1
       - put: /characters/:id
         handler: handler-modify.updateCharacter
         security: security.rule1
+    project:
+      - get: /projects
+        handler: handler-project.getProjects
+      - get: /projects/:project_id
+        handler: handler-project.getProject
+      - post: /projects
+        handler: handler-project.createProject
+      - put: /projects/:id
+        handler: handler-project.updateProject
+    environment:
+      - get: /environments
+        handler: handler-environment.getEnvironments
+      - get: /projects/:project_id/environments
+        handler: handler-environment.getEnvironmentsByProject
+      - get: /environments/:environment_id
+        handler: handler-environment.getEnvironment
+      - post: /environments
+        handler: handler-environment.createEnvironment
+      - put: /environments/:id
+        handler: handler-environment.updateEnvironment
+    domain:
+      - get: /domains
+        handler: handler-domain.getDomains
+      - get: /projects/:project_id/domains
+        handler: handler-domain.getDomainsByProject
+      - get: /domains/:domain_id
+        handler: handler-domain.getDomain
+      - post: /domains
+        handler: handler-domain.createDomain
+      - put: /domains/:id
+        handler: handler-domain.updateDomain
+    service:
+      - get: /services
+        handler: handler-service.getServices
+      - get: /projects/:project_id/services
+        handler: handler-service.getServicesByProject
+      - get: /services/:service_id
+        handler: handler-service.getService
+      - post: /services
+        handler: handler-service.createService
+      - put: /services/:id
+        handler: handler-service.updateService
 queue:
   listen:
     queueName: hook.service_name.function
