@@ -4,7 +4,16 @@ module.exports = function(ctx, resolve) {
             const environmentId = ctx.request.params.environment_id;
 
             return ctx.models.environment.findOne({where: {id: environmentId}})
-                .then(environment => resolve(environment))
+                .then(environment => {
+                    ctx.models.environment_configuration
+                        .findOne({where: {environment_id: environmentId, active: true}})
+                        .then(configuration => {
+                            resolve({
+                                ...environment.dataValues,
+                                configuration: configuration && configuration.config_json
+                            })
+                        });
+                })
                 .catch(err => resolve({message: 'environment not found'}, 404));
         },
         getEnvironments: function() {

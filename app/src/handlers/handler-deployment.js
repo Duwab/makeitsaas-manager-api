@@ -1,5 +1,3 @@
-const Op = require('sequelize').Op;
-
 module.exports = function(ctx, resolve) {
 
     // put that in a service
@@ -11,6 +9,7 @@ module.exports = function(ctx, resolve) {
                     convertLinksToServices(config.services)
                 ]).then(([domainSpecs, servicesSpecs]) => {
                     return {
+                        action: "update",
                         ...config,
                         domains: domainSpecs,
                         services: servicesSpecs
