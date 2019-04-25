@@ -1,8 +1,6 @@
 module.exports = function(ctx, resolve) {
     return {
         getEnvironment: function() {
-            for(var key in ctx)
-                console.log('key', key);
             const environmentId = ctx.request.params.environment_id;
 
             return ctx.models.environment.findOne({where: {id: environmentId}})

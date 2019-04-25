@@ -40,6 +40,13 @@ resources:
         handler: handler-environment.createEnvironment
       - put: /environments/:id
         handler: handler-environment.updateEnvironment
+    environment_configuration:
+      - get: /environments/:environment_id/configurations
+        handler: handler-environment_configuration.getConfigurations
+      - get: /environments/:environment_id/configurations/:configuration_id
+        handler: handler-environment_configuration.getConfiguration
+      - post: /environments/:environment_id/configurations
+        handler: handler-environment_configuration.overrideConfiguration
     domain:
       - get: /domains
         handler: handler-domain.getDomains
