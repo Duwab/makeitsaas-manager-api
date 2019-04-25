@@ -19,6 +19,9 @@ module.exports = function(sequelize, DataTypes) {
         name: {
             type: DataTypes.STRING(255)
         },
+        description: {
+            type: DataTypes.STRING(2046)
+        },
         type: {
             type: DataTypes.STRING(255),
             defaultValue: 'api'

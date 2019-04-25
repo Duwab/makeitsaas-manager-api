@@ -30,7 +30,7 @@ module.exports = function(ctx, resolve) {
             }
 
             for(let key in ctx.request.body) {
-                if(['name', 'type', 'repository_url', 'position'].indexOf(key) !== -1) {
+                if(['name', 'description', 'type', 'repository_url', 'position'].indexOf(key) !== -1) {
                     service[key] = ctx.request.body[key];
                 }
             }
