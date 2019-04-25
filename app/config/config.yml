@@ -47,6 +47,13 @@ resources:
         handler: handler-environment_configuration.getConfiguration
       - post: /environments/:environment_id/configurations
         handler: handler-environment_configuration.overrideConfiguration
+    deployment:
+      - get: /environments/:environment_id/deployment-order
+        handler: handler-deployment.getDeploymentOrder
+      - get: /environments/:environment_id/deployment-checks
+        handler: handler-deployment.getDeploymentChecks
+      - post: /environments/:environment_id/deploy
+        handler: handler-deployment.deploy
     domain:
       - get: /domains
         handler: handler-domain.getDomains
