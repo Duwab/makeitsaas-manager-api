@@ -40,6 +40,8 @@ resources:
         handler: handler-environment.createEnvironment
       - put: /environments/:id
         handler: handler-environment.updateEnvironment
+      - post: /environments/:environment_id/domains
+        handler: handler-environment.addDomain
     environment_configuration:
       - get: /environments/:environment_id/configurations
         handler: handler-environment_configuration.getConfigurations
@@ -54,17 +56,17 @@ resources:
         handler: handler-deployment.getDeploymentChecks
       - post: /environments/:environment_id/deploy
         handler: handler-deployment.deploy
-    domain:
-      - get: /domains
-        handler: handler-domain.getDomains
-      - get: /projects/:project_id/domains
-        handler: handler-domain.getDomainsByProject
-      - get: /domains/:domain_id
-        handler: handler-domain.getDomain
-      - post: /domains
-        handler: handler-domain.createDomain
-      - put: /domains/:id
-        handler: handler-domain.updateDomain
+    domain-base:
+      - get: /domain-bases
+        handler: handler-domain.getDomainBases
+      - get: /projects/:project_id/domain-bases
+        handler: handler-domain.getDomainBasesByProject
+      - get: /domain-bases/:domain_base_id
+        handler: handler-domain.getDomainBase
+      - post: /domain-bases
+        handler: handler-domain.createDomainBase
+      - put: /domain-bases/:id
+        handler: handler-domain.updateDomainBase
     service:
       - get: /services
         handler: handler-service.getServices

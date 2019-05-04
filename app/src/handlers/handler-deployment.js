@@ -5,7 +5,7 @@ module.exports = function(ctx, resolve) {
         return getConfig(environmentId)
             .then(config => {
                 return Promise.all([
-                    convertLinkToDomains(config.domains),
+                    getDomains(environmentId),
                     convertLinksToServices(config.services)
                 ]).then(([domainSpecs, servicesSpecs]) => {
                     return {
@@ -18,16 +18,15 @@ module.exports = function(ctx, resolve) {
             });
     }
 
-    function convertLinkToDomains(domainLinks) {
-        return Promise.all(domainLinks.map(link => {
-            return link && link.domain_id && ctx.models.domain
-                .findOne({where: {id: link.domain_id}})
-                .then(domain => {
-                    return domain && link.subdomain && `${link.subdomain}${domain.base}`;
-                })
-        })).then(domainSpecs => {
-            return domainSpecs.filter(spec => !!spec);
-        });
+    // put function below into a service
+    function getDomains(environmentId) {
+        return ctx.models.domain_subdomain.findAll({
+            where: {
+                environment_id: environmentId
+            },
+            include: [{model: ctx.models.domain_base  , as: 'domain'  }]
+        },{raw: true})
+            .then(subdomains => subdomains.map(subdomain => `${subdomain.subdomain}.${subdomain.domain.base}`));
     }
 
     function convertLinksToServices(serviceLinks) {

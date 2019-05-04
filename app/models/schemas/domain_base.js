@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('domain', {
+    return sequelize.define('domain_base', {
         id: {
             type: DataTypes.BIGINT,
             allowNull: false,
@@ -17,12 +17,23 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         base: {
-            type: DataTypes.STRING(255)
+            type: DataTypes.STRING(255),
+            unique: true
         },
         position: {
             type: DataTypes.INTEGER
-        }
+        },
+        verified: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        wildcardSslEnabled: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
     }, {
-        tableName: 'domain'
+        tableName: 'domain_base'
     })
 };
