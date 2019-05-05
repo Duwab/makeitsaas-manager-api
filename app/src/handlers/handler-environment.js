@@ -50,7 +50,7 @@ module.exports = function(ctx, resolve) {
                         .then(configuration => {
                             return {
                                 ...environment,
-                                services: configuration && configuration.config_json && configuration.config_json.services,
+                                last_configuration_id: configuration && configuration.id,
                                 configuration: configuration && configuration.config_json
                             };
                         });

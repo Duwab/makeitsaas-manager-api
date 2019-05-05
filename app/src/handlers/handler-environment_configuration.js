@@ -24,6 +24,10 @@ module.exports = function(ctx, resolve) {
                 lastConfigurationId = `${ctx.request.body.last_configuration_id}`,
                 overrideConfiguration = ctx.request.body.override_configuration,
                 forceMode = ctx.request.body.force;
+
+            if(!overrideConfiguration || !overrideConfiguration.services) {
+                throw new Error('Invalid request (missing configuration)');
+            }
             ctx.models.environment_configuration.findOne({
                 where: {
                     id: lastConfigurationId,
