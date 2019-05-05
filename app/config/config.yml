@@ -42,6 +42,10 @@ resources:
         handler: handler-environment.updateEnvironment
       - post: /environments/:environment_id/domains
         handler: handler-environment.addDomain
+      - put: /environments/:environment_id/domains
+        handler: handler-environment.updateDomainName
+      - delete: /environments/:environment_id/domains/:domain_name
+        handler: handler-environment.removeDomain
     environment_configuration:
       - get: /environments/:environment_id/configurations
         handler: handler-environment_configuration.getConfigurations

@@ -1,4 +1,26 @@
+const DOMAIN_PATTERN = "^([a-z1-9\-]+)(\\\.[a-z1-9\-]+)+\\\.([a-z1-9\-]+)$";
+const domainRegex = new RegExp(DOMAIN_PATTERN);
+
 module.exports = function(ctx, resolve) {
+
+    const splitDomain = (domain) => {
+        if(!domain || typeof domain !== 'string') {
+            throw new Error('Invalid domain format');
+        }
+
+        if(!domainRegex.test(domain)) {
+            throw new Error('Invalid domain expression');
+        }
+
+        let baseName = domain.replace(/^([a-z1-9\-]+)\.(.+)$/, '$2'),
+            subdomainName = domain.replace(/^([a-z1-9\-]+)\.(.+)$/, '$1');
+
+        return {
+            baseName,
+            subdomainName
+        };
+    };
+
     return {
         getEnvironment: function() {
             const environmentId = ctx.request.params.environment_id;
@@ -70,9 +92,7 @@ module.exports = function(ctx, resolve) {
         },
         addDomain: function() {
             let environmentId = ctx.request.params.environment_id,
-                domain = ctx.request.body.domain,
-                baseName = domain.replace(/^([a-z1-9\-]+)\.(.+)$/, '$2'),
-                subdomainName = domain.replace(/^([a-z1-9\-]+)\.(.+)$/, '$1');
+                {baseName, subdomainName} = splitDomain(ctx.request.body.domain);
 
             return Promise.resolve()
                 .then(() => {
@@ -98,8 +118,77 @@ module.exports = function(ctx, resolve) {
                 }).then(subdomain => {
                     resolve(subdomain);
                 }).catch(err => resolve({error: err && err.message || err}, 400));
+        },
+        updateDomainName: function() {
+            let environmentId = ctx.request.params.environment_id,
+                previousDomain = splitDomain(ctx.request.body.previous),
+                nextDomain = splitDomain(ctx.request.body.next);
 
+            if(previousDomain.baseName !== nextDomain.baseName) {
+                throw new Error('Invalid update : previous and next base domain shall be the same');
+            }
 
+            if(previousDomain.subdomainName === nextDomain.subdomainName) {
+                throw new Error('Invalid update : previous and next value are the same');
+            }
+
+            return Promise.resolve()
+                .then(() => {
+                    return ctx.models.domain_base
+                        .findOne({where: {base: previousDomain.baseName}})
+                        .then(base => {
+                            if(!base) {
+                                throw new Error('Domain base not found');
+                            } else {
+                                return base
+                                // return baseName.dataValues
+                            }
+                        });
+                })
+                .then(base => {
+                    return ctx.models.domain_subdomain
+                        .findOne({where: {domain_id: base.id, subdomain: previousDomain.subdomainName, environment_id: environmentId}})
+                        .then(previousSubdomain => {
+                            if(!previousSubdomain) {
+                                throw new Error('Previous subdomain  not found');
+                            } else {
+                                return previousSubdomain;
+                            }
+                        });
+                })
+                .then(previousSubdomain => {
+                    return ctx.models.domain_subdomain.update(
+                        {subdomain: nextDomain.subdomainName},
+                        {where: {id: previousSubdomain.id}}
+                    );
+                })
+                .then(([affectedCount, affectedRows]) => {
+                    resolve({
+                        affectedCount,
+                        affectedRows
+                    });
+                });
+        },
+        removeDomain: function() {
+            let environmentId = ctx.request.params.environment_id,
+                domain = splitDomain(ctx.request.params.domain_name);
+
+            return ctx.models.domain_base
+                .findOne({where: {base: domain.baseName}})
+                .then(base => {
+                    return ctx.models.domain_subdomain
+                        .destroy({where: {domain_id: base.id, subdomain: domain.subdomainName, environment_id: environmentId}})
+                        .then(affectedRows => {
+                            if(!affectedRows) {
+                                throw new Error('Subdomain not found');
+                            } else {
+                                resolve({
+                                    success: true,
+                                    affectedRows
+                                });
+                            }
+                        });
+                })
         }
 
     }
