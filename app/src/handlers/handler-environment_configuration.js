@@ -21,7 +21,7 @@ module.exports = function(ctx, resolve) {
          */
         overrideConfiguration: function() {
             const environmentId = ctx.request.params.environment_id,
-                lastConfigurationId = `${ctx.request.body.last_configuration_id}`,
+                lastConfigurationId = ctx.request.body.last_configuration_id && `${ctx.request.body.last_configuration_id}`,
                 overrideConfiguration = ctx.request.body.override_configuration,
                 forceMode = ctx.request.body.force;
 
