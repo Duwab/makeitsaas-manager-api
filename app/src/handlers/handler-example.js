@@ -20,8 +20,8 @@ module.exports = function(ctx, resolve) {
         })
       }).catch(error => {
         resolve({error})
-      })
+      });
       ctx.queue.publish('logs', 'resolved modelResolve');
     }
   }
-}
+};

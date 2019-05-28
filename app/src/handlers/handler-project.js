@@ -1,8 +1,6 @@
 module.exports = function(ctx, resolve) {
     return {
         getProject: function() {
-            for(var key in ctx)
-                console.log('key', key);
             const projectId = ctx.request.params.project_id;
 
             return ctx.models.project.findByPk(projectId)
@@ -10,7 +8,8 @@ module.exports = function(ctx, resolve) {
                 .catch(err => resolve({message: 'Project not found'}, 404));
         },
         getProjects: function() {
-            return ctx.models.project.findAll()
+            let userId = ctx.user && ctx.user.jwt && ctx.user.jwt.id || 0;
+            return ctx.models.project.findAll({where: {user_id: userId}})
                 .then(projects => resolve({projects}));
         },
         createProject: function() {
