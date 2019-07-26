@@ -8,20 +8,16 @@
     "build": "./node_modules/.bin/babel -d ./dist ./app -s",
     "start": "./node_modules/.bin/babel-node app/app.js"
   },
-  "author": "",
-  "repository": {
-    "name": "git",
-    "url": "git://github.com/duwab/makeitsaas-manager-api.git"
-  },
+  "author": "Duwab <contact@superpaas.pro>",
+  "repository": "git://github.com/duwab/makeitsaas-manager-api.git",
   "license": "ISC",
   "dependencies": {
-    "@make-it-saas/api": "^0.1.6"
+    "@make-it-saas/api": "^0.1.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.3",
-    "sequelize-auto": "^0.4.29"
+    "@babel/preset-env": "^7.4.3"
   }
 }
