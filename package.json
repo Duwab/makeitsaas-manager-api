@@ -18,7 +18,7 @@
     "@make-it-saas/api": "^0.1.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
