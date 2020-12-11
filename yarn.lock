@@ -687,7 +687,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@make-it-saas/api@^0.1.6":
+"@make-it-saas/api@^0.1.9":
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/@make-it-saas/api/-/api-0.1.9.tgz#964a9a85d330e08492798493a94a568f6094018e"
   integrity sha512-S75zrxVvOQRIzS6G+4K55WYVqdMlH9+C//WstWpOZcoKanJ6tOlJgxLOjYJ8Xe7Q7whd4qXfay8dUqxJlLIRMQ==
@@ -1803,9 +1803,9 @@ inherits@2.0.3:
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 ini@~1.3.0:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
-  integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.7.tgz#a09363e1911972ea16d7a8851005d84cf09a9a84"
+  integrity sha512-iKpRpXP+CrP2jyrxvg1kMUpXDyRUFDWurxbnVT1vQPx+Wz9uCYsMIqYuSBLV+PAaZG/d7kRLKRFc9oDMsH+mFQ==
 
 invariant@^2.2.2:
   version "2.2.4"
